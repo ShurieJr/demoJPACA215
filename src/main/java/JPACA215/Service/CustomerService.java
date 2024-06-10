@@ -1,6 +1,8 @@
-package JPACA215;
+package JPACA215.Service;
 
 
+import JPACA215.Model.Customer;
+import JPACA215.Repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +15,10 @@ public class CustomerService {
         this.repository = repository;
     }
 //oprations
-    public List<Customer> getAllCustomers(){
+    public List<Customer> getAllCustomers(String keyword){
+       if(keyword != null){
+           return repository.search(keyword);
+       }
         return repository.findAll();
     }
 

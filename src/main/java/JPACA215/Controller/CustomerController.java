@@ -1,5 +1,8 @@
-package JPACA215;
+package JPACA215.Controller;
 
+import JPACA215.Service.CustomerService;
+import JPACA215.Model.Customer;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,18 +28,14 @@ public class CustomerController {
     }
     //get mapping
     @GetMapping("/all")
-    public ModelAndView getAllCustomers(){
-        List<Customer> customerList= service.getAllCustomers();
-        return new ModelAndView("CustomerList","customer", customerList);
+    public String getAllCustomers(Model model , @Param("keyword") String keyword){
+        List<Customer> customerList= service.getAllCustomers(keyword);
+        model.addAttribute("customer", customerList);
+        model.addAttribute("keyword", keyword);
+        return "CustomerList";
     }
 
 
-
-
-    @GetMapping("/{id}")
-    public Customer getCustomerById(@PathVariable int id){
-        return service.getCustomerById(id);
-    }
 
     //post mapping
     @PostMapping("/save")
